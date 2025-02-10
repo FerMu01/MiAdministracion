@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Nombre del visitante -->
+    <TextView
+        android:id="@+id/tvNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nombre del visitante"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnEditar"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Botón de Editar -->
+    <ImageButton
+        android:id="@+id/btnEditar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+    android:contentDescription="Editar"
+    android:background="?android:attr/selectableItemBackground"
+    app:layout_constraintTop_toTopOf="@id/tvNombre"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="8dp" />
+
+    <!-- RUT -->
+    <TextView
+        android:id="@+id/tvRut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="RUT"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Botón de Eliminar -->
+    <ImageButton
+        android:id="@+id/btnEliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+    android:contentDescription="Eliminar"
+    android:background="?android:attr/selectableItemBackground"
+    app:layout_constraintTop_toTopOf="@id/tvRut"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="8dp" />
+
+    <!-- Fecha y Hora de Ingreso -->
+    <TextView
+        android:id="@+id/tvFechaIngreso"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fecha y Hora de Ingreso"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvRut"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Botón de Compartir -->
+    <ImageButton
+        android:id="@+id/btnCompartir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_share"
+        android:contentDescription="Compartir"
+    android:background="?android:attr/selectableItemBackground"
+    app:layout_constraintTop_toTopOf="@id/tvFechaIngreso"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="8dp" />
+
+    <!-- Fecha y Hora de Salida -->
+    <TextView
+        android:id="@+id/tvFechaSalida"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fecha y Hora de Salida"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvFechaIngreso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Destino -->
+    <TextView
+        android:id="@+id/tvDestino"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Destino"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvFechaSalida"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

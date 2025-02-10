@@ -18,4 +18,11 @@ interface VisitaDao {
 
     @Query("DELETE FROM visitas")
     suspend fun eliminarTodasLasVisitas()
+
+    @Query("SELECT * FROM visitas")
+    suspend fun getAllVisitas(): List<Visita>
+
+    @Query("SELECT * FROM visitas WHERE id = :id")
+    suspend fun getVisitaById(id: Int): Visita
+
 }

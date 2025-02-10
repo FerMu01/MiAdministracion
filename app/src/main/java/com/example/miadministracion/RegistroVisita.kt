@@ -1,11 +1,13 @@
 package com.example.miadministracion
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,30 +18,41 @@ import com.example.miadministracion.data.Visita
 import com.example.miadministracion.data.VisitaRepository
 import com.example.miadministracion.data.VisitaViewModel
 import com.example.miadministracion.data.VisitaViewModelFactory
-import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
+
 class RegistroVisita : AppCompatActivity() {
 
-    private var selectedDateInMillis: Long = 0
+    // Variables para almacenar en milisegundos la fecha y hora seleccionadas
+    private var fechaHoraIngresoMillis: Long = 0
+    private var fechaHoraSalidaMillis: Long = 0
     private lateinit var visitaViewModel: VisitaViewModel
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_registro_visita)
 
+        // Configuración de insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        // Inicialización de la base de datos, repositorio y ViewModel
         val database = AppDatabase.getDatabase(this)
         val visitaDao = database.visitaDao()
         val repository = VisitaRepository(visitaDao)
         val viewModelFactory = VisitaViewModelFactory(repository)
         visitaViewModel = ViewModelProvider(this, viewModelFactory).get(VisitaViewModel::class.java)
 
+        // Referencias a vistas
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val btnSalir = findViewById<Button>(R.id.btnSalir)
         val btnFechaHoraIngreso = findViewById<Button>(R.id.button_date_picker)
@@ -47,26 +60,22 @@ class RegistroVisita : AppCompatActivity() {
         val tvFechaHoraIngreso = findViewById<TextView>(R.id.tvFechaHoraIngreso)
         val tvFechaHoraSalida = findViewById<TextView>(R.id.tvFechaHoraSalida)
 
+        // Guardar visita
         btnGuardar.setOnClickListener {
             val rut = findViewById<TextView>(R.id.etRut).text.toString()
             val nombreApellido = findViewById<TextView>(R.id.etNombreApellido).text.toString()
             val destino = findViewById<TextView>(R.id.etDepartamentoCasa).text.toString()
-            val fechaHoraIngreso = tvFechaHoraIngreso.text.toString()
-            val fechaHoraSalida = tvFechaHoraSalida.text.toString()
 
-            if (rut.isEmpty() || nombreApellido.isEmpty() || destino.isEmpty() || fechaHoraIngreso.isEmpty()) {
+            if (rut.isEmpty() || nombreApellido.isEmpty() || destino.isEmpty() || tvFechaHoraIngreso.text.isEmpty()) {
                 Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val fechaHoraIngresoMillis = convertToMillis(fechaHoraIngreso)
-            val fechaHoraSalidaMillis = if (fechaHoraSalida.isNotEmpty()) convertToMillis(fechaHoraSalida) else null
-
             val visita = Visita(
                 rut = rut,
-                nombre = nombreApellido,  // Usando el campo combinado
+                nombre = nombreApellido,
                 fechaHoraIngreso = fechaHoraIngresoMillis,
-                fechaHoraSalida = fechaHoraSalidaMillis,
+                fechaHoraSalida = if (tvFechaHoraSalida.text.isNotEmpty()) fechaHoraSalidaMillis else null,
                 destino = destino
             )
 
@@ -79,48 +88,56 @@ class RegistroVisita : AppCompatActivity() {
             finish()
         }
 
+        // Seleccionar fecha y hora de ingreso
         btnFechaHoraIngreso.setOnClickListener {
-            showDateTimePicker(tvFechaHoraIngreso)
+            seleccionarFechaHora { dateTime ->
+                fechaHoraIngresoMillis = dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+                tvFechaHoraIngreso.text = formatoFechaHora(dateTime)
+            }
         }
 
+        // Seleccionar fecha y hora de salida
         btnFechaHoraSalida.setOnClickListener {
-            showDateTimePicker(tvFechaHoraSalida)
+            seleccionarFechaHora { dateTime ->
+                fechaHoraSalidaMillis = dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+                tvFechaHoraSalida.text = formatoFechaHora(dateTime)
+            }
         }
     }
 
-    private fun showDateTimePicker(tv: TextView) {
+    /**
+     * Abre un MaterialDatePicker para seleccionar la fecha, luego un TimePickerDialog para la hora.
+     * Combina ambos en un LocalDateTime y lo devuelve mediante el callback.
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun seleccionarFechaHora(onDateTimeSelected: (LocalDateTime) -> Unit) {
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Selecciona la fecha")
             .build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->
-            selectedDateInMillis = selection
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val date = Date(selectedDateInMillis)
-            tv.text = dateFormat.format(date)
-            showTimePicker(tv)
+            // Se convierte el timestamp a LocalDate tratándolo en UTC
+            val localDate = Instant.ofEpochMilli(selection)
+                .atOffset(ZoneOffset.UTC)
+                .toLocalDate()
+
+            TimePickerDialog(this, { _, selectedHour, selectedMinute ->
+                val localTime = LocalTime.of(selectedHour, selectedMinute)
+                val localDateTime = LocalDateTime.of(localDate, localTime)
+                onDateTimeSelected(localDateTime)
+                Toast.makeText(this, "Fecha y hora seleccionadas: ${formatoFechaHora(localDateTime)}", Toast.LENGTH_SHORT).show()
+            }, 12, 0, true).show()
         }
 
         datePicker.show(supportFragmentManager, "DATE_PICKER")
     }
 
-    private fun showTimePicker(tv: TextView) {
-        val calendar = Calendar.getInstance()
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-
-        val timePickerDialog = TimePickerDialog(
-            this, { _, selectedHour, selectedMinute ->
-                val selectedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
-                val fullDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(selectedDateInMillis)) + " $selectedTime"
-                tv.text = fullDate
-            }, hour, minute, true
-        )
-        timePickerDialog.show()
-    }
-
-    private fun convertToMillis(dateTime: String): Long {
-        val format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        return format.parse(dateTime)?.time ?: 0
+    /**
+     * Formatea un LocalDateTime al formato "dd/MM/yyyy HH:mm".
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun formatoFechaHora(dateTime: LocalDateTime): String {
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return dateTime.format(formatter)
     }
 }

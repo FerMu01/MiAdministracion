@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MiAdministracion"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateList"
+            android:exported="false" />
+        <activity
             android:name=".ListaVisita"
             android:exported="false" />
         <activity

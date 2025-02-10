@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistroVisita">
+    tools:context=".UpdateList">
 
-    <!-- RUT -->
+    <!-- Campo RUT -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilRut"
         android:layout_width="0dp"
@@ -18,15 +18,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etRut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Nombre y Apellido -->
+    <!-- Campo Nombre y Apellido -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilNombreApellido"
         android:layout_width="0dp"
@@ -37,7 +36,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp">
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNombreApellido"
             android:layout_width="match_parent"
@@ -46,70 +44,30 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Fecha y Hora de Ingreso -->
-    <TextView
-        android:id="@+id/tvFechaHoraIngreso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha y Hora de Ingreso"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tilNombreApellido"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp" />
-
     <Button
-        android:id="@+id/button_date_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Seleccionar fecha"
-        app:layout_constraintTop_toBottomOf="@id/tvFechaHoraIngreso"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
-
-    <!-- Departamento y/o Casa -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilDepartamentoCasa"
+        android:id="@+id/btnFechaHoraIngreso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Departamento y/o Casa"
-        app:layout_constraintTop_toBottomOf="@id/button_date_picker"
+        android:text="Seleccionar Fecha y Hora"
+        app:layout_constraintTop_toBottomOf="@id/tilNombreApellido"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etDepartamentoCasa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Fecha y Hora de Salida -->
-    <TextView
-        android:id="@+id/tvFechaHoraSalida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha y Hora de Salida"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tilDepartamentoCasa"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp" />
 
+    <!-- Fecha y Hora de Salida -->
     <Button
         android:id="@+id/btnFechaHoraSalida"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Seleccionar Fecha y Hora"
-        app:layout_constraintTop_toBottomOf="@id/tvFechaHoraSalida"
+        app:layout_constraintTop_toBottomOf="@id/btnFechaHoraIngreso"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="16dp" />
 
-    <!-- Botón para Guardar -->
+    <!-- Botón Guardar -->
     <Button
         android:id="@+id/btnGuardar"
         android:layout_width="0dp"
@@ -122,19 +80,4 @@
         android:layout_marginHorizontal="16dp"
         android:backgroundTint="#3C2A29"
         android:textColor="@android:color/white" />
-
-    <!-- Botón de Salida -->
-    <Button
-        android:id="@+id/btnSalir"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Salir"
-        app:layout_constraintTop_toBottomOf="@id/btnGuardar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"
-        android:layout_marginHorizontal="16dp"
-        android:backgroundTint="#D32F2F"
-        android:textColor="@android:color/white" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
