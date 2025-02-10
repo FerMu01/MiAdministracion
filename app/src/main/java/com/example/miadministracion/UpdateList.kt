@@ -25,8 +25,10 @@ class UpdateList : AppCompatActivity() {
     private lateinit var etNombreApellido: TextInputEditText
     private lateinit var btnFechaHoraIngreso: Button
     private lateinit var btnFechaHoraSalida: Button
+    private lateinit var btnGuardar: Button
     private var fechaHoraIngreso: LocalDateTime? = null
     private var fechaHoraSalida: LocalDateTime? = null
+    private var visitaId: Int = -1
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +39,9 @@ class UpdateList : AppCompatActivity() {
         etNombreApellido = findViewById(R.id.etNombreApellido)
         btnFechaHoraIngreso = findViewById(R.id.btnFechaHoraIngreso)
         btnFechaHoraSalida = findViewById(R.id.btnFechaHoraSalida)
+        btnGuardar = findViewById(R.id.btnGuardar)
 
-        val visitaId = intent.getIntExtra("VISITA_ID", -1)
+        visitaId = intent.getIntExtra("VISITA_ID", -1)
         if (visitaId != -1) {
             cargarVisita(visitaId)
         }
@@ -50,6 +53,10 @@ class UpdateList : AppCompatActivity() {
         btnFechaHoraSalida.setOnClickListener {
             seleccionarFechaHora { fechaHoraSalida = it; btnFechaHoraSalida.text = formatoFechaHora(it) }
         }
+
+        btnGuardar.setOnClickListener {
+            actualizarVisita()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -58,11 +65,9 @@ class UpdateList : AppCompatActivity() {
         datePicker.show(supportFragmentManager, "DATE_PICKER")
 
         datePicker.addOnPositiveButtonClickListener { date ->
-            // Convertir correctamente el timestamp a LocalDate evitando errores de zona horaria
             val localDate = Instant.ofEpochMilli(date)
-                .atOffset(ZoneOffset.UTC) // Asegura que el epoch sea tratado en UTC
+                .atOffset(ZoneOffset.UTC)
                 .toLocalDate()
-
 
             TimePickerDialog(this, { _, hour, minute ->
                 val dateTime = LocalDateTime.of(localDate, LocalTime.of(hour, minute))
@@ -92,11 +97,48 @@ class UpdateList : AppCompatActivity() {
         visita.fechaHoraIngreso?.let {
             val fechaHora = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDateTime()
             btnFechaHoraIngreso.text = formatoFechaHora(fechaHora)
+            fechaHoraIngreso = fechaHora
         }
 
         visita.fechaHoraSalida?.let {
             val fechaHora = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDateTime()
             btnFechaHoraSalida.text = formatoFechaHora(fechaHora)
+            fechaHoraSalida = fechaHora
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun actualizarVisita() {
+        val rut = etRut.text.toString().trim()
+        val nombre = etNombreApellido.text.toString().trim()
+
+        if (rut.isEmpty() || nombre.isEmpty()) {
+            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val db = AppDatabase.getDatabase(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            val visitaExistente = db.visitaDao().getVisitaById(visitaId)
+            visitaExistente?.let {
+                val visitaActualizada = it.copy(
+                    rut = rut,
+                    nombre = nombre,
+                    fechaHoraIngreso = fechaHoraIngreso?.atZone(ZoneId.systemDefault())?.toInstant()?.toEpochMilli() ?: it.fechaHoraIngreso,
+                    fechaHoraSalida = fechaHoraSalida?.atZone(ZoneId.systemDefault())?.toInstant()?.toEpochMilli() ?: it.fechaHoraSalida
+                )
+
+                db.visitaDao().updateVisita(visitaActualizada)
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@UpdateList, "Visita actualizada correctamente", Toast.LENGTH_SHORT).show()
+                    setResult(RESULT_OK) // Indica que la actividad terminó con éxito y hay cambios
+                    finish()
+                }
+
+            } ?: withContext(Dispatchers.Main) {
+                Toast.makeText(this@UpdateList, "No se encontró la visita para actualizar", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

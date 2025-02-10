@@ -10,6 +10,6 @@ class VisitaRepository(private val visitaDao: VisitaDao) {
     }
 
     suspend fun actualizar(visita: Visita) {
-        visitaDao.actualizarVisita(visita)
+        visitaDao.updateVisita(visita)
     }
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,13 @@ class ListaVisita : AppCompatActivity() {
     private lateinit var visitaAdapter: VisitaAdapter
     private lateinit var rvVisitas: RecyclerView
 
+    // Manejo de actividad para actualización de visitas
+    private val updateVisitaLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            obtenerVisitas() // Recargar la lista si se modificó una visita
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_visita)
@@ -32,10 +40,9 @@ class ListaVisita : AppCompatActivity() {
         rvVisitas = findViewById(R.id.rvVisitas)
         rvVisitas.layoutManager = LinearLayoutManager(this)
         visitaAdapter = VisitaAdapter(emptyList()) { visitaId ->
-            // Abrir la actividad UpdateLista y pasar el id de la visita
             val intent = Intent(this, UpdateList::class.java)
             intent.putExtra("VISITA_ID", visitaId)
-            startActivity(intent)
+            updateVisitaLauncher.launch(intent) // Usamos el launcher en lugar de startActivity()
         }
         rvVisitas.adapter = visitaAdapter
 
@@ -78,7 +85,7 @@ class ListaVisita : AppCompatActivity() {
             holder.tvRut.text = visita.rut
             holder.tvFechaIngreso.text = "Ingreso: ${formatFechaHora(visita.fechaHoraIngreso)}"
             holder.tvFechaSalida.text = "Salida: ${visita.fechaHoraSalida?.let { formatFechaHora(it) } ?: "No registrada"}"
-            holder.tvDestino.text = "Destino: ${visita.destino}"
+            holder.tvDestino.text = "Departamento/Casa: ${visita.destino}"
             holder.btnEditar.setOnClickListener {
                 onEditClickListener(visita.id)
             }

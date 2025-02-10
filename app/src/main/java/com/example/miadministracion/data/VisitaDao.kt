@@ -1,6 +1,6 @@
 package com.example.miadministracion.data
+
 import androidx.room.*
-import com.example.miadministracion.data.Visita
 
 @Dao
 interface VisitaDao {
@@ -8,7 +8,7 @@ interface VisitaDao {
     suspend fun insertarVisita(visita: Visita)
 
     @Update
-    suspend fun actualizarVisita(visita: Visita)
+    suspend fun updateVisita(visita: Visita) // Se mantiene solo un método de actualización
 
     @Query("SELECT * FROM visitas ORDER BY fechaHoraIngreso DESC")
     fun obtenerVisitas(): kotlinx.coroutines.flow.Flow<List<Visita>>
@@ -23,6 +23,5 @@ interface VisitaDao {
     suspend fun getAllVisitas(): List<Visita>
 
     @Query("SELECT * FROM visitas WHERE id = :id")
-    suspend fun getVisitaById(id: Int): Visita
-
+    suspend fun getVisitaById(id: Int): Visita?
 }
