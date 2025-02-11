@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true">
+    android:padding="16dp"
+    android:background="#3D3434">
 
     <!-- Nombre del visitante -->
     <TextView
@@ -17,22 +15,11 @@
         android:text="Nombre del visitante"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnEditar"
-        android:layout_marginBottom="4dp" />
-
-    <!-- Botón de Editar -->
-    <ImageButton
-        android:id="@+id/btnEditar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit"
-    android:contentDescription="Editar"
-    android:background="?android:attr/selectableItemBackground"
-    app:layout_constraintTop_toTopOf="@id/tvNombre"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="8dp" />
+        android:layout_marginEnd="16dp" />
 
     <!-- RUT -->
     <TextView
@@ -41,69 +28,85 @@
         android:layout_height="wrap_content"
         android:text="RUT"
         android:textSize="14sp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvNombre"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="4dp" />
+        app:layout_constraintEnd_toStartOf="@id/btnEditar"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        tools:ignore="NotSibling" />
 
-    <!-- Botón de Eliminar -->
-    <ImageButton
-        android:id="@+id/btnEliminar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
-    android:contentDescription="Eliminar"
-    android:background="?android:attr/selectableItemBackground"
-    app:layout_constraintTop_toTopOf="@id/tvRut"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="8dp" />
-
-    <!-- Fecha y Hora de Ingreso -->
+    <!-- Fecha de ingreso -->
     <TextView
         android:id="@+id/tvFechaIngreso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fecha y Hora de Ingreso"
         android:textSize="14sp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvRut"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="4dp" />
+        app:layout_constraintEnd_toStartOf="@id/btnEditar"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp" />
 
-    <!-- Botón de Compartir -->
-    <ImageButton
-        android:id="@+id/btnCompartir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_share"
-        android:contentDescription="Compartir"
-    android:background="?android:attr/selectableItemBackground"
-    app:layout_constraintTop_toTopOf="@id/tvFechaIngreso"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="8dp" />
-
-    <!-- Fecha y Hora de Salida -->
+    <!-- Fecha de salida -->
     <TextView
         android:id="@+id/tvFechaSalida"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fecha y Hora de Salida"
         android:textSize="14sp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvFechaIngreso"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="4dp" />
+        app:layout_constraintEnd_toStartOf="@id/btnEditar"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp" />
 
     <!-- Destino -->
     <TextView
         android:id="@+id/tvDestino"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Destino"
+        android:text="Departamento/Casa"
         android:textSize="14sp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvFechaSalida"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnEditar"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp" />
+
+    <!-- Contenedor para los botones -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/tvNombre"
+        app:layout_constraintBottom_toBottomOf="@id/tvDestino"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginEnd="16dp"
+        android:gravity="center">
+
+        <!-- Botón Editar -->
+        <ImageButton
+            android:id="@+id/btnEditar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_edit"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Editar"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Botón Compartir -->
+        <ImageButton
+            android:id="@+id/btnCompartir"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_share"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Compartir" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
