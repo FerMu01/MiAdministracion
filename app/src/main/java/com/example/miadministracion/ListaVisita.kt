@@ -25,7 +25,6 @@ class ListaVisita : AppCompatActivity() {
     private lateinit var visitaAdapter: VisitaAdapter
     private lateinit var rvVisitas: RecyclerView
 
-    // Manejo de actividad para actualización de visitas
     private val updateVisitaLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             obtenerVisitas() // Recargar la lista si se modificó una visita
@@ -39,11 +38,13 @@ class ListaVisita : AppCompatActivity() {
         // Configurar RecyclerView
         rvVisitas = findViewById(R.id.rvVisitas)
         rvVisitas.layoutManager = LinearLayoutManager(this)
-        visitaAdapter = VisitaAdapter(emptyList()) { visitaId ->
-            val intent = Intent(this, UpdateList::class.java)
-            intent.putExtra("VISITA_ID", visitaId)
-            updateVisitaLauncher.launch(intent) // Usamos el launcher en lugar de startActivity()
-        }
+        visitaAdapter = VisitaAdapter(emptyList(),
+            onEditClickListener = { visitaId ->
+                val intent = Intent(this, UpdateList::class.java)
+                intent.putExtra("VISITA_ID", visitaId)
+                updateVisitaLauncher.launch(intent)
+            }
+        )
         rvVisitas.adapter = visitaAdapter
 
         // Obtener datos de la base de datos
@@ -72,6 +73,7 @@ class ListaVisita : AppCompatActivity() {
             val tvFechaSalida: TextView = itemView.findViewById(R.id.tvFechaSalida)
             val tvDestino: TextView = itemView.findViewById(R.id.tvDestino)
             val btnEditar: ImageButton = itemView.findViewById(R.id.btnEditar)
+            val btnCompartir: ImageButton = itemView.findViewById(R.id.btnCompartir)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VisitaViewHolder {
@@ -86,14 +88,30 @@ class ListaVisita : AppCompatActivity() {
             holder.tvFechaIngreso.text = "Ingreso: ${formatFechaHora(visita.fechaHoraIngreso)}"
             holder.tvFechaSalida.text = "Salida: ${visita.fechaHoraSalida?.let { formatFechaHora(it) } ?: "No registrada"}"
             holder.tvDestino.text = "Departamento/Casa: ${visita.destino}"
+
+            // Editar visita
             holder.btnEditar.setOnClickListener {
                 onEditClickListener(visita.id)
             }
+
+            // Compartir visita
+            holder.btnCompartir.setOnClickListener {
+                val context = holder.itemView.context
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_SUBJECT, "Visita de ${visita.nombre}")
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        "Detalles de la visita:\nNombre: ${visita.nombre}\nRUT: ${visita.rut}\n" +
+                                "Fecha de ingreso: ${formatFechaHora(visita.fechaHoraIngreso)}\n" +
+                                "Departamento/Casa: ${visita.destino}"
+                    )
+                }
+                context.startActivity(Intent.createChooser(intent, "Compartir visita en..."))
+            }
         }
 
-        override fun getItemCount(): Int {
-            return visitas.size
-        }
+        override fun getItemCount(): Int = visitas.size
 
         fun updateVisitas(nuevasVisitas: List<Visita>) {
             visitas = nuevasVisitas
