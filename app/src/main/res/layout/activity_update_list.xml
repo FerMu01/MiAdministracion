@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pantalla de Modificación"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="30sp"
+        android:fontFamily="@font/arrbold"
         android:textColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +41,8 @@
             android:id="@+id/etRut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/arrregular"
+android:textSize="18dp"
             android:foregroundTint="#FFFFFF"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -59,6 +61,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNombreApellido"
             android:layout_width="match_parent"
+            android:fontFamily="@font/arrregular"
+android:textSize="18dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,9 +70,11 @@
     <!-- Fecha y Hora de Ingreso -->
     <Button
         android:id="@+id/btnFechaHoraIngreso"
-        android:layout_width="0dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="Seleccionar Fecha y Hora"
+        android:fontFamily="@font/arrbold"
+android:textSize="18dp"
         app:layout_constraintTop_toBottomOf="@id/tilNombreApellido"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,9 +86,11 @@
     <!-- Fecha y Hora de Salida -->
     <Button
         android:id="@+id/btnFechaHoraSalida"
-        android:layout_width="0dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="Seleccionar Fecha y Hora"
+        android:fontFamily="@font/arrbold"
+android:textSize="18dp"
         app:layout_constraintTop_toBottomOf="@id/btnFechaHoraIngreso"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,13 +102,15 @@
     <!-- Botón Guardar -->
     <Button
         android:id="@+id/btnGuardar"
-        android:layout_width="0dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="Guardar"
         app:layout_constraintTop_toBottomOf="@id/btnFechaHoraSalida"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/arrbold"
+android:textSize="17dp"
         android:layout_marginHorizontal="16dp"
         android:backgroundTint="#F50604"
         android:textColor="@android:color/white" />

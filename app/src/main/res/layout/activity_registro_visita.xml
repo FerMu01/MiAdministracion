@@ -16,8 +16,8 @@
         android:layout_marginTop="16dp"
         android:text="Pantalla de Registro"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textSize="30dp"
+        android:fontFamily="@font/arrbold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -31,6 +31,7 @@
         android:hint="RUT"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/arrregular"
         app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
         android:layout_marginTop="24dp">  <!-- Aumenté el margen para mayor separación -->
 
@@ -38,6 +39,8 @@
             android:id="@+id/etRut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:fontFamily="@font/arrregular"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -57,6 +60,8 @@
             android:id="@+id/etNombreApellido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/arrregular"
+android:textSize="18dp"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +71,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fecha y Hora de Ingreso"
-        android:textSize="16sp"
+        android:textSize="18dp"
+        android:fontFamily="@font/arrregular"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tilNombreApellido"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +84,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:fontFamily="@font/arrbold"
+        android:textSize="16dp"
         android:text="Seleccionar Fecha/Hora Ingreso"
         android:backgroundTint="#A03838"
         app:layout_constraintTop_toBottomOf="@id/tvFechaHoraIngreso"
@@ -100,6 +108,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDepartamentoCasa"
             android:layout_width="match_parent"
+            android:fontFamily="@font/arrregular"
+android:textSize="18dp"
             android:layout_height="wrap_content"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -110,7 +120,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fecha y Hora de Salida"
-        android:textSize="16sp"
+        android:textSize="18dp"
+        android:fontFamily="@font/arrregular"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tilDepartamentoCasa"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +134,8 @@
         android:backgroundTint="#A03838"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:fontFamily="@font/arrbold"
+android:textSize="16dp"
         android:text="Seleccionar Fecha/Hora Salida"
         app:layout_constraintTop_toBottomOf="@id/tvFechaHoraSalida"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,6 +149,8 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Guardar"
+        android:textSize="15dp"
+        android:fontFamily="@font/arrbold"
         app:layout_constraintTop_toBottomOf="@id/btnFechaHoraSalida"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,6 +165,8 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Salir"
+        android:fontFamily="@font/arrbold"
+        android:textSize="15dp"
         app:layout_constraintTop_toBottomOf="@id/btnGuardar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

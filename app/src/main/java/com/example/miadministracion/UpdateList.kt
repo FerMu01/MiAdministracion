@@ -34,6 +34,8 @@ class UpdateList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_list)
+        window.statusBarColor = android.graphics.Color.parseColor("#3D3434")
+
 
         etRut = findViewById(R.id.etRut)
         etNombreApellido = findViewById(R.id.etNombreApellido)

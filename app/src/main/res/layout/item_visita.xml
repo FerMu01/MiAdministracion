@@ -12,14 +12,15 @@
         android:id="@+id/tvNombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Nombre del visitante"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:text="Nombre Del Visitante"
+        android:textSize="19dp"
+        android:fontFamily="@font/arrbold"
         android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnEditar"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        tools:ignore="NotSibling" />
 
     <!-- RUT -->
     <TextView
@@ -27,7 +28,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="RUT"
-        android:textSize="14sp"
+        android:textSize="16dp"
+        android:fontFamily="@font/arrregular"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvNombre"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,13 +44,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fecha y Hora de Ingreso"
-        android:textSize="14sp"
+        android:textSize="18dp"
+        android:fontFamily="@font/arrregular"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvRut"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnEditar"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        tools:ignore="NotSibling" />
 
     <!-- Fecha de salida -->
     <TextView
@@ -56,13 +60,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fecha y Hora de Salida"
-        android:textSize="14sp"
+        android:textSize="18dp"
         android:textColor="@color/white"
+        android:fontFamily="@font/arrregular"
         app:layout_constraintTop_toBottomOf="@id/tvFechaIngreso"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnEditar"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        tools:ignore="NotSibling" />
 
     <!-- Destino -->
     <TextView
@@ -70,13 +76,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Departamento/Casa"
-        android:textSize="14sp"
+        android:textSize="18dp"
+        android:fontFamily="@font/arrregular"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvFechaSalida"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnEditar"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        tools:ignore="NotSibling" />
 
     <!-- Contenedor para los botones -->
     <LinearLayout
@@ -92,8 +100,8 @@
         <!-- Botón Editar -->
         <ImageButton
             android:id="@+id/btnEditar"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_edit"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Editar"
@@ -102,8 +110,8 @@
         <!-- Botón Compartir -->
         <ImageButton
             android:id="@+id/btnCompartir"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_share"
             android:background="?android:attr/selectableItemBackground"
             android:contentDescription="Compartir" />

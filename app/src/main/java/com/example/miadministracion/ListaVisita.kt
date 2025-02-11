@@ -34,6 +34,8 @@ class ListaVisita : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_visita)
+        window.statusBarColor = android.graphics.Color.parseColor("#3D3434")
+
 
         // Configurar RecyclerView
         rvVisitas = findViewById(R.id.rvVisitas)
