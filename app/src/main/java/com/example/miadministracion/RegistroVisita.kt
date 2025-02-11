@@ -24,6 +24,8 @@ import java.time.LocalTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
+import java.time.ZoneId
+
 
 class RegistroVisita : AppCompatActivity() {
 
@@ -91,7 +93,7 @@ class RegistroVisita : AppCompatActivity() {
         // Seleccionar fecha y hora de ingreso
         btnFechaHoraIngreso.setOnClickListener {
             seleccionarFechaHora { dateTime ->
-                fechaHoraIngresoMillis = dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+                fechaHoraIngresoMillis = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
                 tvFechaHoraIngreso.text = formatoFechaHora(dateTime)
             }
         }
@@ -99,7 +101,7 @@ class RegistroVisita : AppCompatActivity() {
         // Seleccionar fecha y hora de salida
         btnFechaHoraSalida.setOnClickListener {
             seleccionarFechaHora { dateTime ->
-                fechaHoraSalidaMillis = dateTime.atZone(ZoneOffset.UTC).toInstant().toEpochMilli()
+                fechaHoraSalidaMillis = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
                 tvFechaHoraSalida.text = formatoFechaHora(dateTime)
             }
         }
