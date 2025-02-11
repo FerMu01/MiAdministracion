@@ -8,7 +8,37 @@
     android:background="#3D3434"
     tools:context=".MainActivity">
 
+    <!-- Primera imagen -->
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="420dp"
+        android:layout_height="250dp"
+        android:src="@drawable/fd"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
 
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+    <!-- Segunda imagen (debajo de la primera) -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/asset01"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+
+        app:layout_constraintTop_toBottomOf="@id/imageView1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"/>
+
+
+    <!-- Botón de Registro de Visita (debajo de la segunda imagen) -->
     <Button
         android:id="@+id/btnRegistroVisita"
         android:layout_width="wrap_content"
@@ -17,13 +47,13 @@
         android:textColor="@color/white"
         android:backgroundTint="#F50604"
         android:fontFamily="@font/arrbold"
-android:textSize="20dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="50dp"/>
 
-    <!-- Botón para Lista de Visita -->
+    <!-- Botón de Lista de Visita (debajo del primer botón) -->
     <Button
         android:id="@+id/btnListaVisita"
         android:layout_width="wrap_content"
@@ -31,7 +61,7 @@ android:textSize="20dp"
         android:text="Lista de Visita"
         android:textColor="@color/white"
         android:fontFamily="@font/arrbold"
-android:textSize="20dp"
+        android:textSize="20dp"
         android:backgroundTint="#F50604"
         app:layout_constraintTop_toBottomOf="@id/btnRegistroVisita"
         app:layout_constraintStart_toStartOf="parent"
